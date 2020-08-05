@@ -3,11 +3,6 @@ SetWorkingDir, %A_ScriptDir%
 /*
     Author: Mario675 Scrappy Ez Connect
 
-    I need to add the feture to connect to different networks. Right now it only connects to my computer because of the built
-    in mouse movement. This program should be able to identify the ip, without build in customization.
-
-    scrcpy Seems to have been disabled in the shortcut version, so how about running two different versions from the shortcut?
-    added feture keep awake, for convince, so that device settings does not have to go to sleep. 
     For future reference dev notes
     DO NOT
     winwait "ahk_exe notepad.exe"
@@ -15,11 +10,7 @@ SetWorkingDir, %A_ScriptDir%
     winwait ahk_exe notepad.exe
 
 
-    Now added the capability to connect to ANY network of ip!
-    Removed variable confusion
-    Added a function for easy ending options.
-
-    tbd ADD IN FAILSAFE IN CASE DEVICE NOT CONNECTED. bc it will go through and waste time. 
+    Transferred Issues and bug patches to github. No longer have to update this section. 
 */
 
 

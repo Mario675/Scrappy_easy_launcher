@@ -57,13 +57,19 @@ Startup_Powershell_n_prepare_adb()
     send cd C:\adb `n
     return
 }
+
+
+
+
 Shortcuts_Setting := 0 ;0 OR 1.;This Controls the shortcut setting, and the switch funtion below, handles the cases. Though, pointless with the mod. 
 Switch_Number := 0   ;dev notes:Needed to add the new := declaration in order to work.
 
 Switch_Shortcut_Cases(Switch_Number) ;This ends the command, with the final scrappy Command. This includes an option to have shortcuts available. 
 {
     screenResolution = "1024"
-    
+    max_Size = "800"
+
+
     switch Switch_Number
     {
         case 1: ;Wired
@@ -73,7 +79,7 @@ Switch_Shortcut_Cases(Switch_Number) ;This ends the command, with the final scra
 
         case 2: 
         ;Wireless
-        send ./scrcpy --bit-rate 2M --max-size 800 --stay-awake`n 
+        send ./scrcpy --bit-rate 2M --max-size %max_Size% --stay-awake`n 
         ;msgbox Case 2`n%wire_less%`nWireless ;Debug
         return
 
@@ -83,7 +89,7 @@ Switch_Shortcut_Cases(Switch_Number) ;This ends the command, with the final scra
         return
 
         case 2.2:  ;Wireless_Shortcut-Included
-        send ./scrcpy --bit-rate 2M --max-size 800 --shortcut-mod=lctrl{+}lalt,lcmd,rcmd `n ;+ is interperted as shift rather than typing it out.
+        send ./scrcpy --bit-rate 2M --max-size %max_Size% --shortcut-mod=lctrl{+}lalt,lcmd,rcmd `n ;+ is interperted as shift rather than typing it out.
         ;msgbox Case 2.2 `n%wire_less%`nWireless_Shortcut-Included ;Debug
         return
 

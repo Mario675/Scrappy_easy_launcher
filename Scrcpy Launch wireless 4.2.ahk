@@ -99,7 +99,7 @@ Switch_Shortcut_Cases(Switch_Number) ;This ends the command, with the final scra
 return
 }
 
-wire_less = 9 ;Somthing other than 0 or 1
+wire_less = 9 ;Somthing other than 0 or 1. wired/Wireless is determined end of ifmsgbox.
 End_Settings(wire_less, Shortcuts_Setting)
 {
     if Shortcuts_Setting = 0

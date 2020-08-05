@@ -3,11 +3,6 @@ SetWorkingDir, %A_ScriptDir%
 /*
     Author: Mario675 Scrappy Ez Connect
 
-    I need to add the feture to connect to different networks. Right now it only connects to my computer because of the built
-    in mouse movement. This program should be able to identify the ip, without build in customization.
-
-    scrcpy Seems to have been disabled in the shortcut version, so how about running two different versions from the shortcut?
-    added feture keep awake, for convince, so that device settings does not have to go to sleep. 
     For future reference dev notes
     DO NOT
     winwait "ahk_exe notepad.exe"
@@ -15,15 +10,9 @@ SetWorkingDir, %A_ScriptDir%
     winwait ahk_exe notepad.exe
 
 
-    Now added the capability to connect to ANY network of ip!
-    Removed variable confusion
-    Added a function for easy ending options.
-
-    tbd ADD IN FAILSAFE IN CASE DEVICE NOT CONNECTED. bc it will go through and waste time. 
-    tbd Add in a variable for the user to easaly change their devices screen resulution.
-    tdb add in a config file, or use a gui program to configure options.
-    tdb Add in Ctrl+x To terminate script. 
+    Transferred Issues and bug patches to github. No longer have to update this section. 
 */
+
 
 
 
@@ -53,33 +42,46 @@ Startup_Powershell_n_prepare_adb()
     send cls `n
     send adb disconnect `n
     send echo off `n
-    send cd C:\adb `n
+
+    IniRead, ADB_PATH, %A_ScriptDir%/Settings.ini, Path_ADB_s, ADB_PATH [, Default]
+
+    send cd %ADB_PATH% `n
     return
 }
-Shortcuts_Setting := 0 ;0 OR 1.;This Controls the shortcut setting, and the switch funtion below, handles the cases. Though, pointless with the mod. 
+
+
+
+IniRead, Shortcuts_Setting, %A_ScriptDir%/Settings.ini, Shortcut_Mod_s, Shortcuts_Setting
+;0 OR 1.;This Controls the shortcut setting, and the switch function below, handles the cases. Though, pointless with the mod, because it works anyways. 
+
 Switch_Number := 0   ;dev notes:Needed to add the new := declaration in order to work.
+
 Switch_Shortcut_Cases(Switch_Number) ;This ends the command, with the final scrappy Command. This includes an option to have shortcuts available. 
 {
+    IniRead, screenResolution, %A_ScriptDir%/Settings.ini, Screen_Resolution_s, screenResolution
+    IniRead, max_Size,  %A_ScriptDir%/Settings.ini, Screen_Resolution_s, max_Size
+    ;IniRead, OutputVar, Filename, Section, Key [, Default]
+
     switch Switch_Number
     {
         case 1: ;Wired
-        send `n 
+        send scrcpy -m %screenResolution% --stay-awake`n 
         ;msgbox Case 1`n%wire_less%`nWired ;Debug
         return
 
         case 2: 
         ;Wireless
-        send ./scrcpy --bit-rate 2M --max-size 800 --stay-awake`n 
+        send ./scrcpy --bit-rate 2M --max-size %max_Size% --stay-awake`n 
         ;msgbox Case 2`n%wire_less%`nWireless ;Debug
         return
 
         case 1.2:  ;Wired_Shortcut-Included
-        send scrcpy -m 1024 --shortcut-mod=lctrl{+}lalt,lcmd,rcmd `n
+        send scrcpy -m %screenResolution% --shortcut-mod=lctrl{+}lalt,lcmd,rcmd `n
         ;msgbox Case 1.2 `n%wire_less%`nWired_Shortcut-Included ;Debug
         return
 
         case 2.2:  ;Wireless_Shortcut-Included
-        send ./scrcpy --bit-rate 2M --max-size 800 --shortcut-mod=lctrl{+}lalt,lcmd,rcmd `n ;+ is interperted as shift rather than typing it out.
+        send ./scrcpy --bit-rate 2M --max-size %max_Size% --shortcut-mod=lctrl{+}lalt,lcmd,rcmd `n ;+ is interperted as shift rather than typing it out.
         ;msgbox Case 2.2 `n%wire_less%`nWireless_Shortcut-Included ;Debug
         return
 
@@ -88,7 +90,7 @@ Switch_Shortcut_Cases(Switch_Number) ;This ends the command, with the final scra
 return
 }
 
-wire_less = 9 ;Somthing other than 0 or 1
+wire_less = 9 ;Somthing other than 0 or 1. wired/Wireless is determined end of ifmsgbox.
 End_Settings(wire_less, Shortcuts_Setting)
 {
     if Shortcuts_Setting = 0
@@ -166,18 +168,19 @@ Ifmsgbox, yes
  msgbox, 0, Waiting, Once Disconnected`npress ok.`nPress Esc to close
     Ifmsgbox, Ok
     End_Settings(1, Shortcuts_Setting)
-    return
+    exitapp
 }
 
 Ifmsgbox, no
 {
     Startup_Powershell_n_prepare_adb()
     End_Settings(0, Shortcuts_Setting)  
-    return
+    exitapp
 }
 
 IfMsgBox, Cancel
 return 
 
-
+^x::
+exitapp
     

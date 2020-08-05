@@ -43,7 +43,7 @@ Startup_Powershell_n_prepare_adb()
     send adb disconnect `n
     send echo off `n
 
-    IniRead, ADB_PATH, %A_ScriptDir%/Settings.ini, Path_ADB_s, ADB_PATH [, Default]
+    IniRead, ADB_PATH, %A_ScriptDir%/Settings.ini, Path_ADB_s, ADB_PATH
 
     send cd %ADB_PATH% `n
     return

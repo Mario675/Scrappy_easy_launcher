@@ -60,15 +60,16 @@ Startup_Powershell_n_prepare_adb()
 
 
 
+IniRead, Shortcuts_Setting, %A_ScriptDir%/Settings.ini, Shortcut_Mod, Shortcuts_Setting
+;0 OR 1.;This Controls the shortcut setting, and the switch function below, handles the cases. Though, pointless with the mod, because it works anyways. 
 
-Shortcuts_Setting := 0 ;0 OR 1.;This Controls the shortcut setting, and the switch funtion below, handles the cases. Though, pointless with the mod. 
 Switch_Number := 0   ;dev notes:Needed to add the new := declaration in order to work.
 
 Switch_Shortcut_Cases(Switch_Number) ;This ends the command, with the final scrappy Command. This includes an option to have shortcuts available. 
 {
-    screenResolution = "1024"
-    max_Size = "800"
-
+    IniRead, screenResolution, %A_ScriptDir%/Settings.ini, Screen_Resolution, screenResolution
+    IniRead, max_Size,  %A_ScriptDir%/Settings.ini, Screen_Resolution, max_Size
+    ;IniRead, OutputVar, Filename, Section, Key [, Default]
 
     switch Switch_Number
     {

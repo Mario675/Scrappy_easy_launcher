@@ -45,7 +45,7 @@ Startup_Powershell_n_prepare_adb()
 
     IniRead, ADB_PATH, %A_ScriptDir%/Settings.ini, Path_ADB_s, ADB_PATH [, Default]
 
-    send cd C:\adb `n
+    send cd %ADB_PATH% `n
     return
 }
 

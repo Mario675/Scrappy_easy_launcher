@@ -20,9 +20,6 @@ SetWorkingDir, %A_ScriptDir%
     Added a function for easy ending options.
 
     tbd ADD IN FAILSAFE IN CASE DEVICE NOT CONNECTED. bc it will go through and waste time. 
-    tbd Add in a variable for the user to easaly change their devices screen resulution.
-    tdb add in a config file, or use a gui program to configure options.
-    tdb Add in Ctrl+x To terminate script. 
 */
 
 

@@ -27,6 +27,7 @@ SetWorkingDir, %A_ScriptDir%
 
 
 
+
 Switch_Number := 0
 User_errors(Switch_Number)
 {
@@ -179,5 +180,6 @@ Ifmsgbox, no
 IfMsgBox, Cancel
 return 
 
-
+^x::
+exitapp
     

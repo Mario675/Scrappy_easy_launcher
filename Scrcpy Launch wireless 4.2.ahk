@@ -54,21 +54,24 @@ Startup_Powershell_n_prepare_adb()
     send cls `n
     send adb disconnect `n
     send echo off `n
+
+    IniRead, ADB_PATH, %A_ScriptDir%/Settings.ini, Path_ADB_s, ADB_PATH [, Default]
+
     send cd C:\adb `n
     return
 }
 
 
 
-IniRead, Shortcuts_Setting, %A_ScriptDir%/Settings.ini, Shortcut_Mod, Shortcuts_Setting
+IniRead, Shortcuts_Setting, %A_ScriptDir%/Settings.ini, Shortcut_Mod_s, Shortcuts_Setting
 ;0 OR 1.;This Controls the shortcut setting, and the switch function below, handles the cases. Though, pointless with the mod, because it works anyways. 
 
 Switch_Number := 0   ;dev notes:Needed to add the new := declaration in order to work.
 
 Switch_Shortcut_Cases(Switch_Number) ;This ends the command, with the final scrappy Command. This includes an option to have shortcuts available. 
 {
-    IniRead, screenResolution, %A_ScriptDir%/Settings.ini, Screen_Resolution, screenResolution
-    IniRead, max_Size,  %A_ScriptDir%/Settings.ini, Screen_Resolution, max_Size
+    IniRead, screenResolution, %A_ScriptDir%/Settings.ini, Screen_Resolution_s, screenResolution
+    IniRead, max_Size,  %A_ScriptDir%/Settings.ini, Screen_Resolution_s, max_Size
     ;IniRead, OutputVar, Filename, Section, Key [, Default]
 
     switch Switch_Number
@@ -177,14 +180,14 @@ Ifmsgbox, yes
  msgbox, 0, Waiting, Once Disconnected`npress ok.`nPress Esc to close
     Ifmsgbox, Ok
     End_Settings(1, Shortcuts_Setting)
-    return
+    exitapp
 }
 
 Ifmsgbox, no
 {
     Startup_Powershell_n_prepare_adb()
     End_Settings(0, Shortcuts_Setting)  
-    return
+    exitapp
 }
 
 IfMsgBox, Cancel

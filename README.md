@@ -1,5 +1,5 @@
 # scrcpy_EZ_Launcher
-This Help File will get an update. Soon.
+Please read the .docx file that named "What Does it do (The Githelp File)"
 AHK Program that's designed to easaly launch scrcpy within only minimal clicks. 
 
 This program is based on https://github.com/Genymobile/scrcpy
